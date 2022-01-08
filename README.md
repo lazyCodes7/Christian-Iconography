@@ -1,4 +1,6 @@
 # Christian-Iconography
+![Screenshot from 2022-01-08 18-26-30](https://user-images.githubusercontent.com/53506835/148644986-4e29f4df-fee0-47da-a289-b9ff3c589c41.png)
+
 A computer vision pipeline to identify the "icons" in Christian paintings.
 
 ## A bit about iconography.
@@ -13,5 +15,17 @@ The project uses the ArtDL dataset which contains 42,479 images of artworks port
 
 ## Sources
 ![Screenshot from 2022-01-08 18-08-56](https://user-images.githubusercontent.com/53506835/148644482-f3747702-2508-499c-b034-d97e790b9e52.png)
+
+## Preprocessing steps.
+All the images were first padded so that the resolution is sort of intact when the image is resized. A dash of normalization and some horizontal flips and the dataset is ready to be eaten/trained on by our model xD.
+
+## Architecture used.
+As mentioned the ArtDL dataset has around 43k images and hence training it completely wouldn't make sense. Hence a ResNet50 pretrained model was used.
+
+But there is a twist.
+
+Instead of just having the final classifying layer trained we only freeze the initial layer as it has gotten better at recognizing patterns from a lot of images it might have trained on. And then we fine-tune the deeper layers so that it learns the art after the initial abstraction. Another deviation is to replace the final linear layer by 1x1 conv layer to make the classification.
+
+
 
 
