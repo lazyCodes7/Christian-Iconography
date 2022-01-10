@@ -26,6 +26,51 @@ But there is a twist.
 
 Instead of just having the final classifying layer trained we only freeze the initial layer as it has gotten better at recognizing patterns from a lot of images it might have trained on. And then we fine-tune the deeper layers so that it learns the art after the initial abstraction. Another deviation is to replace the final linear layer by 1x1 conv layer to make the classification.
 
+## Quantiative Results.
 
+### Training
+I trained the network for 10 epochs which took around 3 hours and used Stochastic Gradient Descent with LR=0.01 and momentum 0.9. The accuracy I got was 64% on the test set which can be further improved.
 
+### Classification Report
+![Screenshot from 2022-01-10 22-07-52](https://user-images.githubusercontent.com/53506835/148803160-ad659e9d-d48a-4fd4-8bf7-f943d000f3a7.png)
 
+From the classification report it is clear that Saint MARY has the most number of samples in the training set and the precision for that is high. On the other hand other samples are low in number and hence their scores are low and hence we can't infer much except the fact that we need to oversample some of these classes so that we can gain more meaningful resuls w.r.t accuracy and of course these metrics as well
+
+## Qualitative Results
+
+We try an image of Saint Dominic and see what our classifier is really learning.
+
+![Screenshot from 2022-01-10 22-10-37](https://user-images.githubusercontent.com/53506835/148803610-4675d71c-d4ef-4d75-a67c-5ed9ece2d270.png)
+
+### Saliency Map
+![Screenshot from 2022-01-10 22-12-31](https://user-images.githubusercontent.com/53506835/148803868-2af58632-9708-4595-bf5b-54b98cf543d6.png)
+
+We can notice that regions around are more lighter than elsewhere which could mean that our classifier at least knows where to look :p
+
+### Guided-Backpropagation
+![Screenshot from 2022-01-10 22-14-26](https://user-images.githubusercontent.com/53506835/148804169-344c1c23-d0ae-4389-a88f-4b430ae43f4f.png)
+
+So what really guided backprop does is that it points out the positve influences while classifiying an image. From this result we can see that it is really ignoring the padding applied and focussing more on the body and interesting enough the surroundings as well
+
+### Grad-CAM!
+![Screenshot from 2022-01-10 22-15-27](https://user-images.githubusercontent.com/53506835/148804850-5e358206-8a89-4229-aab8-9fd197b88562.png)
+
+As expected the Grad-CAM when used shows the hot regions in our images and it is around the face and interesting enough the surrounding so maybe it could be that surroundings do have a role-play in type of saint?
+
+## Possible improvements.
+- Finding more datasets
+- Or working on the architecture maybe?
+- Using GANs to generate samples and make classifier stronger
+
+## Citations
+```
+@misc{milani2020data,
+title={A Data Set and a Convolutional Model for Iconography Classification in Paintings},
+author={Federico Milani and Piero Fraternali},
+eprint={2010.11697},
+archivePrefix={arXiv},
+primaryClass={cs.CV},
+year={2020}
+}
+```
+[RedhenLab's barnyard of projects](https://www.redhenlab.org/home/the-cognitive-core-research-topics-in-red-hen/the-barnyard/christian-iconography-the-emile-male-pipeline)
