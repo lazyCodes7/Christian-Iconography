@@ -29,7 +29,7 @@ class Trainer:
 
         val_dataset = ArtDLDataset(
             data_dir = data_dir,
-            transform = val_transform,
+            transform = tf.val_transform,
             labels_path = labels_path,
             set_type = 'val'
         )
